@@ -14,7 +14,7 @@ Once a known amount of ETH is in a wallet, the bot will diversify the ETH into t
 amount of tokens purchased per token will depend on its market cap divided by the total market cap of the top 20
 tokens.
 
-All code is written in python, and imports various libraries for help.
+All code is written in python, and imports various libraries for help. Bots.py is meant to be the main driver.
 
 ### How could this project be targeted at consumers/businesses?
 ETF's are known to be a reliable way for any investor/institution to gain exposure in a selected market. As opposed to 
