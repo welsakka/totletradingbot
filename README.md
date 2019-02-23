@@ -1,4 +1,4 @@
-# Totle auto-adjusting ETF bot
+# Totle ETF bot
 
 This bot is purposed to pull data from various API's from Totle and other third-party sources to create
 an 'ETF' of the top 20 tokens listed on Totle's exchange. Tokens are ranked according to market cap,
