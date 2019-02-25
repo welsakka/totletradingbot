@@ -15,55 +15,52 @@ def totleAddresses(sym):
 
     return addressList 
 
+#This function pulls bids for the selected tokens using Totle's API
+#A price is calculated by averaging all the bids available
+#for one token
 def totleBids(add):
     r = requests.get('https://services.totlesystem.com/tokens/prices')
     rj = r.json()
     rDict = rj['response']
 
     addressList = {}
-
+    
+    #Get values in response for the contract addresses we are interested in
     for x in add:
-        for i in rDict:
-            if i == x:
-                addressList[x] = rDict[i]
+        if(x in add and list(rDict.keys())):
+            addressList.update({x: rDict[x]})
 
+    #Get bid values for each contract address
     bidList = []
     for x in addressList:
         bidList.append(addressList[x])
-    
+
+    #Where i is a counter variable, temp holds bid values for a single contract address,
+    #tempAvg holds a single bid price, and realAvg is our return value
     i = 0
-    test = []
-    avgBidList = []
+    temp = []
+    tempAvg = 0
     realAvg = []
 
-    while i < (len(add) - 1):
+    while i < (len(bidList)):
         float_avg = 0
         counter = 0
-        test = (bidList[i])
+        temp = (bidList[i])
         
-        for x in test:
-            avgBidList = test[x]['bid']
-            float_avg += float(avgBidList)
+        for x in temp:
+            tempAvg = temp[x]['bid']
+            if(tempAvg == None): break
+            float_avg += float(tempAvg)
             counter += 1
             
-
+        #Average bid for a single token
         float_avg = float_avg / counter
         realAvg.append(float_avg)
-        i += 1
- 
-    return avgBidList 
+        i = i + 1
+        
+    return realAvg 
 
-
-def totleRebalance():
-    payload = {
-        'address': '0x29126c4099c2d6e1dEBE2529CC5D983E5ed6fD7C',
-        'buys' : [ 
-            {
-                'token' : '0x107c4504cd79c5d2696ea0030a8dd4e92601b82e',
-                'amount' : '100000000000000000'
-            }
-            ]
-    }
+def totleRebalance(payload):
     r = requests.post('https://services.totlesystem.com/tokens', data=payload)
     print(r.text)
 
