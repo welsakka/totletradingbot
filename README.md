@@ -1,18 +1,12 @@
 # Totle ETF bot
 
 This bot is purposed to pull data from various API's from Totle and other third-party sources to create
-an 'ETF' of the top 20 tokens listed on Totle's exchange. Tokens are ranked according to market cap,
-and the ETF's positions will be based on:
+a diversified wallet of ERC20 tokens listed on Totle's exchange. Tokens are ranked according to market cap,
+and the ETF's positions per token will be based on:
 
-*Asset's market cap / Aggregated market cap*
+*Token's market cap / Aggregated market cap*
 
-The ETF's positions could be readjusted within any time period, based on the user (or Totle's) preference.
-Readjustment will make use of Totle's swap API.
-A wallet should be funded with only ETH to ensure that the bot properly distributes the right token amounts.
 
-Once a known amount of ETH is in a wallet, the bot will diversify the ETH into the various tokens. Once again,
-amount of tokens purchased per token will depend on its market cap divided by the total market cap of the top 20
-tokens.
 
 All code is written in python, and imports various libraries for help. Bots.py is meant to be the main driver.
 
