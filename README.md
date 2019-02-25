@@ -28,6 +28,7 @@ Therefore, I propose that allowing users to particpate in an ETF will:
 4. Create arbitrage opportunities for traders and Authorized Participants (or automatic burning/distribution of tokens)
 Totle's API and platform are the perfect match for a Token ETF, simply because they are able to aggregate prices from various DEX's,
 making the most fair and accurate order book for any token.
+
 A rough draft idea on how to implement an ETF is to create a multi-signiture wallet that has access to the Totle exchange. An ERC-20 or security token could be created to represent shares in the ETF, using oracles to get constant price updates on the ETF.
 
 ### Additional ways to expand on this idea
