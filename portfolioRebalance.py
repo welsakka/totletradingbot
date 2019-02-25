@@ -4,10 +4,10 @@ from getWallet import walletBalance
 
 #### WALLET MUST BE FUNDED WITH ONLY ETH TO ENSURE ALL FUNDS ####
 ####             ARE DISTRIBUTED PROPERLY                    ####
-def calculateNewPortfolio(marketCapList):
+def calculateNewPortfolio(marketCapList, walletAddress):
     D = aggMarketCap(marketCapList)
     P = obtainTokenPercent(D, marketCapList)
-    Y = obtainEthPercent(walletBalance(), P)
+    Y = obtainEthPercent(walletBalance(walletAddress), P)
 
     #Returns a list of how much of each token should be held in 
     #a wallet of ETH. List positions correspond to the symbolsList in bot.py
