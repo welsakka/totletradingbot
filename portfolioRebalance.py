@@ -1,4 +1,5 @@
 from getWallet import walletBalance
+import math
 
 #return dictionary of token symbols to ETH values in wei
 
@@ -38,7 +39,9 @@ def obtainTokenPercent(x, marketCapList):
 def obtainEthPercent(wB, tokenPercent):
     ethPercent = []
 
+    wB = float(wB) / math.pow(10,18)
+
     for i in tokenPercent:
-        ethPercent.append(i * int(wB))
+        ethPercent.append(i * float(wB))
 
     return ethPercent

@@ -61,7 +61,5 @@ def totleBids(add):
     return realAvg 
 
 def totleRebalance(payload):
-    r = requests.post('https://services.totlesystem.com/tokens', data=payload)
+    r = requests.post('https://services.totlesystem.com/rebalance', data=payload)
     print(r.text)
-
-    #requires authentication?

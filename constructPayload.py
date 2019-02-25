@@ -1,6 +1,7 @@
+import json
 
 def cPayload(cAddresses, ePercent, tPrice, walletAddress):
-    myPayload = dict(address=walletAddress, buys=[])
+    myPayload = dict(address=walletAddress, buys=[], sells=[])
     i = 0
 
     #Amount of tokens to be purchased per token

@@ -3,12 +3,12 @@
 and totle.py if needed. This bot is still a work in progress'''
 
 
-import time, requests, json, sys
+import time, requests, json, sys, math
+from constructPayload import cPayload
 from marketCap import getMarketCaps
 from portfolioRebalance import calculateNewPortfolio, obtainTokenPercent, aggMarketCap
 from getWallet import walletBalance
 from totle import totleAddresses, totleRebalance, totleBids
-from constructPayload import cPayload
 
 #Input the symbols you are interested in including in the ETF, and the wallet you want to interact with
 
@@ -35,12 +35,11 @@ payload = cPayload(symbolContractAddresses, ethPercent, symbolBids, wallet)
 percent = obtainTokenPercent(aggMarketCap(list(symsAndCaps.values())), list(symsAndCaps.values()))
 
 newSymbols = list(symsAndCaps.keys())
+print("Wallet Balance: " , float(walletBalance(wallet)) / math.pow(10,18) ,'ETH\n')
 print("The symbols to be added to the ETF are " + json.dumps(newSymbols,sort_keys=True,indent=4) + '\n')
 print("The position percentage of each token is " + json.dumps(dict(zip(newSymbols,percent)),sort_keys=True, indent=4) + '\n')
-print('The amount of Ether(wei) that must be spent for each token is ' 
+print('The amount of Ether that must be spent for each token is ' 
 + json.dumps(dict(zip(newSymbols,ethPercent)), sort_keys=True, indent=4) + '\n' )
-
-print("Wallet Balance:" + walletBalance(wallet) + ' wei\n')
 
 confirm = input("Would you like to diversify your wallet into these tokens(Y/N)?")
 if confirm == "y":
