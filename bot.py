@@ -8,7 +8,7 @@ from constructPayload import cPayload
 from marketCap import getMarketCaps
 from portfolioRebalance import calculateNewPortfolio, obtainTokenPercent, aggMarketCap
 from getWallet import walletBalance
-from totle import totleAddresses, totleRebalance, totleBids
+from totle import *
 
 #Input the symbols you are interested in including in the ETF, and the wallet you want to interact with
 
@@ -30,7 +30,8 @@ symsAndCaps = {'AE': 110616028.7491738, 'BAT': 176180236.0371023, 'BNB': 1528138
 symbolContractAddresses = totleAddresses(symbolList)
 symbolBids = totleBids(symbolContractAddresses)
 ethPercent = calculateNewPortfolio(list(symsAndCaps.values()), wallet)
-payload = cPayload(symbolContractAddresses, ethPercent, symbolBids, wallet)
+symDecimals = totleDecimals(symbolList)
+payload = cPayload(symbolContractAddresses, ethPercent, symbolBids, wallet, symDecimals)
 
 percent = obtainTokenPercent(aggMarketCap(list(symsAndCaps.values())), list(symsAndCaps.values()))
 

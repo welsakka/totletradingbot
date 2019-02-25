@@ -1,6 +1,8 @@
 import json
+from decimal import *
+from totle import totleDecimals
 
-def cPayload(cAddresses, ePercent, tPrice, walletAddress):
+def cPayload(cAddresses, ePercent, tPrice, walletAddress, dec):
     myPayload = dict(address=walletAddress, buys=[], sells=[])
     i = 0
 
@@ -9,8 +11,11 @@ def cPayload(cAddresses, ePercent, tPrice, walletAddress):
     while i < len(ePercent) :
         tokenAmount.append(ePercent[i]/tPrice[i])
         i += 1
-    i = 0
 
+    for x in tokenAmount:
+        Decimal(x).quantize(Decimal('1000000000000000000.'), rounding=ROUND_DOWN)
+    
+    i = 0
     tempD = {}
     buysList = []
     while i < len(cAddresses):

@@ -13,7 +13,21 @@ def totleAddresses(sym):
             if i['symbol'] == x:
                 addressList.append(i['address'])
 
-    return addressList 
+    return addressList
+
+def totleDecimals(sym):
+    r = requests.get('https://services.totlesystem.com/tokens')
+    rj = r.json()
+    rDict = rj['tokens']
+
+    decimalList = []
+
+    for x in sym:
+        for i in rDict:
+            if i['symbol'] == x:
+                decimalList.append(i['decimals'])
+
+    return decimalList 
 
 #This function pulls bids for the selected tokens using Totle's API
 #A price is calculated by averaging all the bids available
