@@ -1,4 +1,4 @@
-from getContractInfo import walletBalance
+from getWallet import walletBalance
 
 #return dictionary of token symbols to ETH values in wei
 

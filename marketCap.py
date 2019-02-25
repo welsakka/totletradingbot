@@ -6,7 +6,7 @@ import json
 def getMarketCaps(symbolList):
 
     #Passing list of symbols to receive market cap data to Coinmarketcap
-    api_key = 'Your API Key'
+    api_key = 'your API key'
 
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?CMC_PRO_API_KEY='
     url += api_key
@@ -23,7 +23,7 @@ def getMarketCaps(symbolList):
 
     for x in rDict:
         capList.append((rDict[x]['quote']['USD']['market_cap']))
-        symList.append((rDict[x]['name']))
+        symList.append((rDict[x]['symbol']))
 
     symAndCaps = dict(zip(symList, capList))
         

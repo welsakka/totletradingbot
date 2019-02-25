@@ -6,32 +6,37 @@ and totle.py if needed. This bot is still a work in progress'''
 import time, requests, json
 from marketCap import getMarketCaps
 from portfolioRebalance import calculateNewPortfolio, obtainTokenPercent, aggMarketCap
-from getContractInfo import walletBalance
-from totle import totleSymbols, TotleRebalance
+from getWallet import walletBalance
+from totle import totleAddresses, totleRebalance, totleBids
 
-#pull token symbols using Totle API. Uncomment to pull live data from Totle and CMC. WILL PULL ALL TOKENS, 
-#NOT JUST TOP 20
-
-#  symbolList = totleSymbols()
-#  symbolList = [e for e in symbolList if e not in ('WETH_OLD', 'REP-OLD', 'DCL','DONUT','ENO','ENTRP','EQC','FLIP','WLK','XGM')]
-#  s = ",".join(symbolList)
-#  marketCapList = getMarketCaps(s)
-
-#sample marketcaps of the top 20 pulled from Totle as of 5:45pm, 2/21/2019
-#Add hashtags to the two lists below if you uncomment the lines above
-marketCapList = [1657118263.00, 1472770946.00, 648012910.00, 182025458.00, 166002951.00, 156057596.00, 151483880.00, 151328735.00, 146127115.00, 114814488.00, 97968027.00, 86225302.00, 81910953.00, 81523240.00, 80927709.71, 72603818.00, 70640626.00, 68746234.00, 66295291.54, 63206322.00, 48665207.00]
+#Input the symbols you are interested in including in the ETF
 symbolList = ['TRX','BNB','MKR','OMG','BAT','LINK','REP','ZIL','ZRX','NPXS','AE','BTM','PPP','THETA','SNT','PPT','R','PRL','GNT','MCO']
+s = ",".join(symbolList)
 
-symbolsAndMarket = dict(zip(symbolList, marketCapList))
-ethPercent = calculateNewPortfolio(list(symbolsAndMarket.values()))
-percent = obtainTokenPercent(aggMarketCap(marketCapList),marketCapList)
+#Pull market caps from CoinMarketCap API
+####   UNCOMMENT THE LINE BELOW TO PULL THE LATEST VALUES FOR MARKET CAPS
+#symsAndCaps = getMarketCaps(s)
+
+#sample marketcaps of the above symbols as of 5:28 PM, 2/23/2019
+#All marketcaps are zipped together with their respective tokens into dictionaries
+#### DELETE LINE BELOW IF YOU WISH TO HAVE LATEST MARKET CAP DATA
+symsAndCaps = {'AE': 110616028.7491738, 'BAT': 176180236.0371023, 'BNB': 1528138527.5502732, 'BTM': 107908389.37092498, 'GNT': 67319391.11022033, 'LINK': 161257248.3207, 'MCO': 47891331.91474555, 'MKR': 736260770.2210001, 'NPXS': 121042231.38820533, 'OMG': 188407893.63948122, 'PPP': 10321151.851725, 'PPT': 70256074.5472155, 'R': 68278133.57607299, 'REP': 156271009.3395, 'SNT': 78876592.15510762, 'THETA': 86962303.3296093, 'TRX': 1695425046.3470254, 'ZIL': 161465729.23760486, 'ZRX': 150122797.95562127}
 
 
-print("The symbols to be added to the ETF are " + str(symbolList) + '\n')
-print("The position percentage of each token is " + str(dict(zip(symbolList,percent))) + '\n')
-print('The amount of Ether(wei) that must be spent for each token is ' + str(dict(zip(symbolList,ethPercent))) + '\n' )
+#Pull token addressses and bids
+symbolContractAddresses = totleAddresses(symbolList)
+symbolBids = totleBids(symbolContractAddresses)
+
+ethPercent = calculateNewPortfolio(list(symsAndCaps.values()))
+percent = obtainTokenPercent(aggMarketCap(list(symsAndCaps.values())), list(symsAndCaps.values()))
+
+newSymbols = list(symsAndCaps.keys())
+
+print("The symbols to be added to the ETF are " + str(newSymbols) + '\n')
+print("The position percentage of each token is " + str(dict(zip(newSymbols,percent))) + '\n')
+print('The amount of Ether(wei) that must be spent for each token is ' + str(dict(zip(newSymbols,ethPercent))) + '\n' )
 
 print("Wallet Balance:" + walletBalance() + ' wei\n')
 
 
-TotleRebalance()
+totleRebalance()
